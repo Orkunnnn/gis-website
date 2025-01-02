@@ -208,20 +208,30 @@
             justify-content: flex-end;
         }
 
-        .tab-content {
+        .route-option {
+            display: inline-block;
+            margin: 10px;
+            font-size: 20px;
+        }
+
+        .route-option input[type="radio"] {
             display: none;
         }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        .tabs div {
+        .route-option span {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
             cursor: pointer;
         }
 
-        .tabs .active {
-            font-weight: bold;
+        .route-option input[type="radio"]:checked+span {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -250,39 +260,34 @@
                     <div class="active" data-tab="how-can-i-go">How can I go?</div>
                     <div data-tab="service-status">Service Status</div>
                 </div>
-                <div id="how-can-i-go" class="tab-content active">
-                    <form action="map.html" method="get">
-                        <select id="route" name="route">
-                            <option value="rota">Rota 1</option>
-                            <option value="rota2">Rota 2</option>
-                        </select>
-                        <input type="text" id="start" name="start" placeholder="Starting Point" list="stations">
-                        <input type="text" id="end" name="end" placeholder="Destination Point" list="stations">
-                        <datalist id="stations"></datalist>
-                        <button type="submit">Plan</button>
-                    </form>
-                    <div class="icons">
-                        <a href="">
-                            <div>
-                                <img style="filter: brightness(0) invert(1);" src="Assets/hat.png" alt="Hatlarımız"
-                                    width="40">
-                                <p>Routes</p>
-                            </div>
-                        </a>
-                        <a href="">
-                            <div>
-                                <img style="filter: brightness(0) invert(1);" src="Assets/konum.png" alt="Ağ Haritaları"
-                                    width="40">
-                                <p>Network Maps</p>
-                            </div>
-                        </a>
-                        <a href="">
-                            <div>
-                                <img style="filter: brightness(0) invert(1);" src="Assets/sefer.png"
-                                    alt="Sefer Tarifeleri" width="40">
-                                <p>Schedule</p>
-                            </div>
-                        </a>
+                <form action="map.html" method="get">
+                    <label class="route-option">
+                        <input type="radio" name="route" value="rota">
+                        <span>M15</span>
+                    </label>
+                    <label class="route-option">
+                        <input type="radio" name="route" value="rota2">
+                        <span class="red">M16</span>
+                    </label>
+                    <input type="text" id="start" name="start" placeholder="Çıkış Noktası" list="stations">
+                    <input type="text" id="end" name="end" placeholder="Gidilecek Yer" list="stations">
+                    <datalist id="stations"></datalist>
+                    <button type="submit">Planla</button>
+                </form>
+                <div class="icons">
+                    <div>
+                        <img style="filter: brightness(0) invert(1);" src="Assets/hat.png" alt="Hatlarımız" width="40">
+                        <p>Hatlarımız</p>
+                    </div>
+                    <div>
+                        <img style="filter: brightness(0) invert(1);" src="Assets/konum.png" alt="Ağ Haritaları"
+                            width="40">
+                        <p>Ağ Haritaları</p>
+                    </div>
+                    <div>
+                        <img style="filter: brightness(0) invert(1);" src="Assets/sefer.png" alt="Sefer Tarifeleri"
+                            width="40">
+                        <p>Sefer Tarifeleri</p>
                     </div>
                 </div>
                 <div id="service-status" class="tab-content">
@@ -326,23 +331,25 @@
             rota2: 'istasyon2.geojson'
         };
 
-        document.getElementById('route').addEventListener('change', function () {
-            const selectedRoute = this.value;
-            fetch(routes[selectedRoute])
-                .then(response => response.json())
-                .then(data => {
-                    const datalist = document.getElementById('stations');
-                    datalist.innerHTML = '';
-                    data.features.forEach(feature => {
-                        const option = document.createElement('option');
-                        option.value = feature.properties.ISTASYON;
-                        datalist.appendChild(option);
+        document.querySelectorAll('input[name="route"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                const selectedRoute = this.value;
+                fetch(routes[selectedRoute])
+                    .then(response => response.json())
+                    .then(data => {
+                        const datalist = document.getElementById('stations');
+                        datalist.innerHTML = '';
+                        data.features.forEach(feature => {
+                            const option = document.createElement('option');
+                            option.value = feature.properties.ISTASYON;
+                            datalist.appendChild(option);
+                        });
                     });
-                });
+            });
         });
 
         // İlk yüklemede varsayılan rota için istasyonları yükle
-        document.getElementById('route').dispatchEvent(new Event('change'));
+        document.querySelector('input[name="route"]:checked').dispatchEvent(new Event('change'));
     </script>
 </body>
 
