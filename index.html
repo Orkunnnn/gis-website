@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metro İstanbul</title>
+    <link rel="shortcut icon" href="Assets/metro-favicon.png" type="image/gif/png">
     <style>
         body {
             background-image: url('Assets/metroresim.jpg');
@@ -50,7 +51,7 @@
         }
 
         .navbar a:hover {
-            text-decoration: underline;
+            color: #003366
         }
 
         .plan {
@@ -212,49 +213,58 @@
     <header>
         <div class="navbar">
             <div>
-                <img width="256" style="filter: invert(100%);" src="Assets/itügeomatik.png" alt="itü geomatik">
-                <img width="256" height="64" src="Assets/nav.png" alt="metro">
+                <a href="#">
+                    <img width="256" style="filter: invert(100%);" src="Assets/itügeomatik.png" alt="itü geomatik">
+                    <img width="256" height="64" src="Assets/nav.png" alt="metro">
+                </a>
             </div>
             <div>
-                <a href="#">Ana Sayfa</a>
-                <a href="#planlama">Projelerimiz</a>
-                <a href="#hatlar">Hatlar</a>
-                <a href="#iletisim">İletişim</a>
+                <a href="index.html">Homepage</a>
+                <a href="#projects">Projects</a>
+                <a href="#routes">Routes</a>
+                <a href="#team">Team</a>
             </div>
         </div>
-        <h1>GÜVENLİ DAKİK KONFORLU</h1>
+        <h1 style="margin-top: 40px;">SAFE PUNCTUAL COMFORTABLE</h1>
         <div class="plan">
             <div class="planlama" id="planlama">
-                <h2>Yolculuğunuzu Planlayın</h2>
+                <h2>Plan your travel</h2>
                 <div class="tabs">
-                    <div class="active">Nasıl Giderim?</div>
-                    <div>Hizmet Durumu</div>
+                    <div class="active">How can I go?</div>
+                    <div>Service Status</div>
                 </div>
                 <form action="map.html" method="get">
                     <select id="route" name="route">
                         <option value="rota">Rota 1</option>
                         <option value="rota2">Rota 2</option>
                     </select>
-                    <input type="text" id="start" name="start" placeholder="Çıkış Noktası" list="stations">
-                    <input type="text" id="end" name="end" placeholder="Gidilecek Yer" list="stations">
+                    <input type="text" id="start" name="start" placeholder="Starting Point" list="stations">
+                    <input type="text" id="end" name="end" placeholder="Destination Point" list="stations">
                     <datalist id="stations"></datalist>
-                    <button type="submit">Planla</button>
+                    <button type="submit">Plan</button>
                 </form>
                 <div class="icons">
-                    <div>
-                        <img style="filter: brightness(0) invert(1);" src="Assets/hat.png" alt="Hatlarımız" width="40">
-                        <p>Hatlarımız</p>
-                    </div>
-                    <div>
-                        <img style="filter: brightness(0) invert(1);" src="Assets/konum.png" alt="Ağ Haritaları"
-                            width="40">
-                        <p>Ağ Haritaları</p>
-                    </div>
-                    <div>
-                        <img style="filter: brightness(0) invert(1);" src="Assets/sefer.png" alt="Sefer Tarifeleri"
-                            width="40">
-                        <p>Sefer Tarifeleri</p>
-                    </div>
+                    <a href="">
+                        <div>
+                            <img style="filter: brightness(0) invert(1);" src="Assets/hat.png" alt="Hatlarımız"
+                                width="40">
+                            <p>Routes</p>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div>
+                            <img style="filter: brightness(0) invert(1);" src="Assets/konum.png" alt="Ağ Haritaları"
+                                width="40">
+                            <p>Network Maps</p>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div>
+                            <img style="filter: brightness(0) invert(1);" src="Assets/sefer.png" alt="Sefer Tarifeleri"
+                                width="40">
+                            <p>Schedule</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -263,17 +273,17 @@
     <main>
         <div class="menu-container">
             <div class="menu" id="hatlar">
-                <div>Hatlarımız</div>
-                <div>Ağ Haritaları</div>
-                <div>Sefer Tarifeleri</div>
-                <div>Bilet ve Ücretler</div>
-                <div>Yolculuk Kuralları</div>
+                <div>Routes</div>
+                <div>Network Maps</div>
+                <div>Schedule</div>
+                <div>Tickets and Fees</div>
+                <div>Travel Rules</div>
             </div>
         </div>
     </main>
 
     <footer id="iletisim">
-        <p>&copy; 2025 Metro İstanbul - <a href="#">Çözüm Merkezi</a></p>
+        <p>&copy; 2025 Made with ❤️ by Group 1</p>
     </footer>
 
     <script>
