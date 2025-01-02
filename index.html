@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro İstanbul</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: yellow;
+        }
+
+        header {
+            background: url('Assets/metroresim.jpg') no-repeat center center/cover;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #003366;
+            font-weight: bolder;
+            margin: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #003366;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .plan {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .planlama {
+            background: #003366;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .planlama h2 {
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .planlama .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .planlama .tabs div {
+            flex: 1;
+            padding: 10px;
+            background: #0055a5;
+            color: white;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .planlama .tabs div.active {
+            background: #ff4d4d;
+        }
+
+        .planlama input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: white;
+            color: black;
+        }
+
+        .planlama button {
+            background: #0055a5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .planlama button:hover {
+            background: #0077cc;
+        }
+
+        .planlama .icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .planlama .icons div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: #003366;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px auto;
+            flex-wrap: wrap;
+        }
+
+        .menu div {
+            background: #003366;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            flex: 1 1 150px;
+        }
+
+        .menu div:hover {
+            background: #0055a5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div>
+                <img width="256" style="filter: invert(100%);" src="Assets/itügeomatik.png" alt="itü geomatik">
+                <img width="256" height="64" src="Assets/nav.png" alt="metro">
+            </div>
+            <div>
+                <a href="#">Ana Sayfa</a>
+                <a href="#planlama">Projelerimiz</a>
+                <a href="#hatlar">Hatlar</a>
+                <a href="#iletisim">İletişim</a>
+            </div>
+        </div>
+        <h1>GÜVENLİ DAKİK KONFORLU</h1>
+        <div class="plan">
+            <div class="planlama" id="planlama">
+                <h2>Yolculuğunuzu Planlayın</h2>
+                <div class="tabs">
+                    <div class="active">Nasıl Giderim?</div>
+                    <div>Hizmet Durumu</div>
+                </div>
+                <input type="text" placeholder="Çıkış Noktası">
+                <input type="text" placeholder="Gidilecek Yer">
+                <button>Planla</button>
+                <div class="icons">
+                    <div>
+                        <img style="filter: brightness(0) invert(1);" src="Assets/hat.png" alt="Hatlarımız" width="40">
+                        <p>Hatlarımız</p>
+                    </div>
+                    <div>
+                        <img style="filter: brightness(0) invert(1);" src="Assets/konum.png" alt="Ağ Haritaları"
+                            width="40">
+                        <p>Ağ Haritaları</p>
+                    </div>
+                    <div>
+                        <img style="filter: brightness(0) invert(1);" src="Assets/sefer.png" alt="Sefer Tarifeleri"
+                            width="40">
+                        <p>Sefer Tarifeleri</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+
+
+
+    <div class="menu" id="hatlar">
+        <div>Hatlarımız</div>
+        <div>Ağ Haritaları</div>
+        <div>Sefer Tarifeleri</div>
+        <div>Bilet ve Ücretler</div>
+        <div>Yolculuk Kuralları</div>
+    </div>
+
+    <footer id="iletisim">
+        <p>&copy; 2025 Metro İstanbul - <a href="#">Çözüm Merkezi</a></p>
+    </footer>
+</body>
+
+</html>
