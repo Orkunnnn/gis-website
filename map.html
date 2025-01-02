@@ -66,6 +66,7 @@
     </style>
 </head>
 
+
 <body>
     <div class="navbar">
         <div>
@@ -95,8 +96,16 @@
         let istasyonlar;
         let rota;
 
+        const routes = {
+            rota: { stations: 'istasyon.geojson', route: 'rota.geojson' },
+            rota2: { stations: 'istasyon2.geojson', route: 'rota2.geojson' }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const selectedRoute = params.get('route') || 'rota';
+
         // İstasyonlar GeoJSON dosyasını al
-        fetch('istasyon.geojson')
+        fetch(routes[selectedRoute].stations)
             .then(response => response.json())
             .then(data => {
                 istasyonlar = data;
@@ -106,7 +115,7 @@
             });
 
         // Rota GeoJSON dosyasını al
-        fetch('rota.geojson')
+        fetch(routes[selectedRoute].route)
             .then(response => response.json())
             .then(data => {
                 rota = data;
@@ -118,7 +127,6 @@
 
         // Başlangıç ve bitiş istasyonlarından rotayı çizmek için URL parametrelerini alma
         function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
             return {
                 start: params.get('start') ? params.get('start').toUpperCase() : '',
                 end: params.get('end') ? params.get('end').toUpperCase() : ''
@@ -172,32 +180,65 @@
                 L.marker([startCoords[1], startCoords[0]], { icon: startIcon }).bindPopup(startFeature.properties.ISTASYON).addTo(map);
                 L.marker([endCoords[1], endCoords[0]], { icon: endIcon }).bindPopup(endFeature.properties.ISTASYON).addTo(map);
 
-                // Rotayı haritaya ekleyin
-                const filteredRoute = {
-                    type: "Feature",
-                    geometry: {
-                        type: "LineString",
-                        coordinates: []
-                    }
-                };
+                // Tüm rotayı haritaya ekleyin
+                L.geoJSON(rota).addTo(map);
 
-                const allCoords = rota.features[0].geometry.coordinates.flat();
+                // Metro simgesi için özel ikon oluştur
+                const metroIcon = L.icon({
+                    iconUrl: 'https://maps.google.com/mapfiles/kml/shapes/rail.png',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
 
-                const closestStartCoord = findClosestCoordinate(startCoords, allCoords);
-                const closestEndCoord = findClosestCoordinate(endCoords, allCoords);
-
-                let startIndex = allCoords.findIndex(coord => coord[0] === closestStartCoord[0] && coord[1] === closestStartCoord[1]);
-                let endIndex = allCoords.findIndex(coord => coord[0] === closestEndCoord[0] && coord[1] === closestEndCoord[1]);
-
-                // Başlangıç ve bitiş noktaları arasında bir alt dizi oluştur
-                if (startIndex !== -1 && endIndex !== -1 && startIndex < endIndex) {
-                    filteredRoute.geometry.coordinates = allCoords.slice(startIndex, endIndex + 1);
+                // Metro simgelerini haritaya ekleyin
+                const metroMarkers = [];
+                for (let i = 0; i < 6; i++) { // 6 metro simgesi ekleyelim
+                    const metroMarker = L.marker([startCoords[1], startCoords[0]], { icon: metroIcon }).addTo(map);
+                    metroMarkers.push(metroMarker);
                 }
 
-                L.geoJSON(filteredRoute).addTo(map);
+                // Metro simgelerini hareket ettirme fonksiyonu
+                function moveMetro() {
+                    const now = new Date();
+                    const minutes = now.getMinutes();
+                    const seconds = now.getSeconds();
+                    const totalSeconds = minutes * 60 + seconds;
 
-                // Haritayı başlangıç ve bitiş noktalarına göre ayarlayın
-                map.fitBounds([[startCoords[1], startCoords[0]], [endCoords[1], endCoords[0]]]);
+                    // İstasyonlar arasındaki süreyi hesaplayın
+                    const startStationIndex = istasyonlar.features.findIndex(f => f.geometry.coordinates[0] === startCoords[0] && f.geometry.coordinates[1] === startCoords[1]);
+                    const endStationIndex = istasyonlar.features.findIndex(f => f.geometry.coordinates[0] === endCoords[0] && f.geometry.coordinates[1] === endCoords[1]);
+                    const totalTravelTime = Math.abs(endStationIndex - startStationIndex) * 2 * 60; // Her durak arası 2 dakika
+
+                    // Her metro simgesinin konumunu hesaplayın
+                    metroMarkers.forEach((metroMarker, index) => {
+                        const offset = index * 10 * 60; // Her metro simgesi arasında 10 dakika mesafe
+                        const progress = ((totalSeconds + offset) % (2 * totalTravelTime)) / totalTravelTime;
+                        const routeCoords = rota.features[0].geometry.coordinates[0];
+                        let currentIndex, nextIndex, currentCoords, nextCoords, lat, lng;
+
+                        if (progress <= 1) {
+                            currentIndex = Math.floor(progress * (routeCoords.length - 1));
+                            nextIndex = currentIndex + 1;
+                            currentCoords = routeCoords[currentIndex];
+                            nextCoords = routeCoords[nextIndex];
+                            lat = currentCoords[1] + (nextCoords[1] - currentCoords[1]) * (progress * (routeCoords.length - 1) - currentIndex);
+                            lng = currentCoords[0] + (nextCoords[0] - currentCoords[0]) * (progress * (routeCoords.length - 1) - currentIndex);
+                        } else {
+                            const reverseProgress = progress - 1;
+                            currentIndex = Math.floor(reverseProgress * (routeCoords.length - 1));
+                            nextIndex = currentIndex + 1;
+                            currentCoords = routeCoords[routeCoords.length - 1 - currentIndex];
+                            nextCoords = routeCoords[routeCoords.length - 1 - nextIndex];
+                            lat = currentCoords[1] + (nextCoords[1] - currentCoords[1]) * (reverseProgress * (routeCoords.length - 1) - currentIndex);
+                            lng = currentCoords[0] + (nextCoords[0] - currentCoords[0]) * (reverseProgress * (routeCoords.length - 1) - currentIndex);
+                        }
+
+                        metroMarker.setLatLng([lat, lng]);
+                    });
+                }
+
+                setInterval(moveMetro, 1000); // Her saniye güncelle
 
                 // Kalan süreyi hesaplayın ve ekranda gösterin
                 function updateTime() {
@@ -205,11 +246,6 @@
                     const minutes = now.getMinutes();
                     const nextTrainInMinutes = 10 - (minutes % 10);
                     const secondTrainInMinutes = nextTrainInMinutes + 10;
-
-                    // İstasyonlar arasındaki süreyi hesaplayın
-                    const startStationIndex = istasyonlar.features.findIndex(f => f.geometry.coordinates[0] === startCoords[0] && f.geometry.coordinates[1] === startCoords[1]);
-                    const endStationIndex = istasyonlar.features.findIndex(f => f.geometry.coordinates[0] === endCoords[0] && f.geometry.coordinates[1] === endCoords[1]);
-                    const totalTravelTime = Math.abs(endStationIndex - startStationIndex) * 2; // Her durak arası 2 dakika
 
                     const postit = document.getElementById('postit');
                     const currentTime = document.getElementById('current-time');

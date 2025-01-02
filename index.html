@@ -231,6 +231,10 @@
                     <div>Hizmet Durumu</div>
                 </div>
                 <form action="map.html" method="get">
+                    <select id="route" name="route">
+                        <option value="rota">Rota 1</option>
+                        <option value="rota2">Rota 2</option>
+                    </select>
                     <input type="text" id="start" name="start" placeholder="Çıkış Noktası" list="stations">
                     <input type="text" id="end" name="end" placeholder="Gidilecek Yer" list="stations">
                     <datalist id="stations"></datalist>
@@ -273,16 +277,28 @@
     </footer>
 
     <script>
-        fetch('istasyon.geojson')
-            .then(response => response.json())
-            .then(data => {
-                const datalist = document.getElementById('stations');
-                data.features.forEach(feature => {
-                    const option = document.createElement('option');
-                    option.value = feature.properties.ISTASYON;
-                    datalist.appendChild(option);
+        const routes = {
+            rota: 'istasyon.geojson',
+            rota2: 'istasyon2.geojson'
+        };
+
+        document.getElementById('route').addEventListener('change', function () {
+            const selectedRoute = this.value;
+            fetch(routes[selectedRoute])
+                .then(response => response.json())
+                .then(data => {
+                    const datalist = document.getElementById('stations');
+                    datalist.innerHTML = '';
+                    data.features.forEach(feature => {
+                        const option = document.createElement('option');
+                        option.value = feature.properties.ISTASYON;
+                        datalist.appendChild(option);
+                    });
                 });
-            });
+        });
+
+        // İlk yüklemede varsayılan rota için istasyonları yükle
+        document.getElementById('route').dispatchEvent(new Event('change'));
     </script>
 </body>
 
