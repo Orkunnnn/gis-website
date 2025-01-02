@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harita</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #map {
+            height: calc(100vh - 100px);
+            /* Navbar ve alt bilgi ekranı yüksekliği kadar boşluk bırak */
+            width: 100%;
+            margin-top: 60px;
+            /* Navbar yüksekliği kadar boşluk bırak */
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            top: 0;
+            z-index: 1000;
+            background-color: #0055a5;
+            position: fixed;
+            width: 100%;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .info-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #0055a5;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .postit {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: yellow;
+            padding: 10px;
+            border: 1px solid black;
+            z-index: 1001;
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div>
+            <img width="256" style="filter: invert(100%);" src="Assets/itügeomatik.png" alt="itü geomatik">
+            <img width="256" height="64" src="Assets/nav.png" alt="metro">
+        </div>
+        <div>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="#planlama">Projelerimiz</a>
+            <a href="#hatlar">Hatlar</a>
+            <a href="#iletisim">İletişim</a>
+        </div>
+    </div>
+    <div id="map"></div>
+    <div class="postit" id="postit">
+        <div id="current-time">Şu anki saat: --:--</div>
+        <div id="next-train">İlk tren: -- dakika sonra</div>
+        <div id="second-train">Sonraki tren: -- dakika sonra</div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([41.0082, 28.9784], 10); // İstanbul koordinatları
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        let istasyonlar;
+        let rota;
+
+        // İstasyonlar GeoJSON dosyasını al
+        fetch('istasyon.geojson')
+            .then(response => response.json())
+            .then(data => {
+                istasyonlar = data;
+            })
+            .catch(error => {
+                console.error('İstasyonlar GeoJSON yüklenemedi:', error);
+            });
+
+        // Rota GeoJSON dosyasını al
+        fetch('rota.geojson')
+            .then(response => response.json())
+            .then(data => {
+                rota = data;
+                drawRoute(); // Rota çizme fonksiyonunu çağır
+            })
+            .catch(error => {
+                console.error('Rota GeoJSON yüklenemedi:', error);
+            });
+
+        // Başlangıç ve bitiş istasyonlarından rotayı çizmek için URL parametrelerini alma
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                start: params.get('start') ? params.get('start').toUpperCase() : '',
+                end: params.get('end') ? params.get('end').toUpperCase() : ''
+            };
+        }
+
+        // En yakın koordinatları bulma fonksiyonu
+        function findClosestCoordinate(target, coordinates) {
+            let closestCoord = null;
+            let closestDistance = Infinity;
+
+            coordinates.forEach(coord => {
+                const distance = Math.sqrt(Math.pow(coord[0] - target[0], 2) + Math.pow(coord[1] - target[1], 2));
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestCoord = coord;
+                }
+            });
+
+            return closestCoord;
+        }
+
+        // Rotayı çizme fonksiyonu
+        function drawRoute() {
+            const { start, end } = getQueryParams();
+
+            // Başlangıç ve bitiş istasyonlarını bul
+            const startFeature = istasyonlar.features.find(f => f.properties.ISTASYON.toUpperCase().includes(start));
+            const endFeature = istasyonlar.features.find(f => f.properties.ISTASYON.toUpperCase().includes(end));
+
+            if (startFeature && endFeature) {
+                const startCoords = startFeature.geometry.coordinates;
+                const endCoords = endFeature.geometry.coordinates;
+
+                // Başlangıç ve bitiş istasyonları için özel ikonlar oluştur
+                const startIcon = L.icon({
+                    iconUrl: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
+
+                const endIcon = L.icon({
+                    iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
+
+                // Başlangıç ve bitiş istasyonlarını haritaya ekleyin
+                L.marker([startCoords[1], startCoords[0]], { icon: startIcon }).bindPopup(startFeature.properties.ISTASYON).addTo(map);
+                L.marker([endCoords[1], endCoords[0]], { icon: endIcon }).bindPopup(endFeature.properties.ISTASYON).addTo(map);
+
+                // Rotayı haritaya ekleyin
+                const filteredRoute = {
+                    type: "Feature",
+                    geometry: {
+                        type: "LineString",
+                        coordinates: []
+                    }
+                };
+
+                const allCoords = rota.features[0].geometry.coordinates.flat();
+
+                const closestStartCoord = findClosestCoordinate(startCoords, allCoords);
+                const closestEndCoord = findClosestCoordinate(endCoords, allCoords);
+
+                let startIndex = allCoords.findIndex(coord => coord[0] === closestStartCoord[0] && coord[1] === closestStartCoord[1]);
+                let endIndex = allCoords.findIndex(coord => coord[0] === closestEndCoord[0] && coord[1] === closestEndCoord[1]);
+
+                // Başlangıç ve bitiş noktaları arasında bir alt dizi oluştur
+                if (startIndex !== -1 && endIndex !== -1 && startIndex < endIndex) {
+                    filteredRoute.geometry.coordinates = allCoords.slice(startIndex, endIndex + 1);
+                }
+
+                L.geoJSON(filteredRoute).addTo(map);
+
+                // Haritayı başlangıç ve bitiş noktalarına göre ayarlayın
+                map.fitBounds([[startCoords[1], startCoords[0]], [endCoords[1], endCoords[0]]]);
+
+                // Kalan süreyi hesaplayın ve ekranda gösterin
+                function updateTime() {
+                    const now = new Date();
+                    const minutes = now.getMinutes();
+                    const nextTrainInMinutes = 10 - (minutes % 10);
+                    const secondTrainInMinutes = nextTrainInMinutes + 10;
+
+                    // İstasyonlar arasındaki süreyi hesaplayın
+                    const startStationIndex = istasyonlar.features.findIndex(f => f.geometry.coordinates[0] === startCoords[0] && f.geometry.coordinates[1] === startCoords[1]);
+                    const endStationIndex = istasyonlar.features.findIndex(f => f.geometry.coordinates[0] === endCoords[0] && f.geometry.coordinates[1] === endCoords[1]);
+                    const totalTravelTime = Math.abs(endStationIndex - startStationIndex) * 2; // Her durak arası 2 dakika
+
+                    const postit = document.getElementById('postit');
+                    const currentTime = document.getElementById('current-time');
+                    const nextTrain = document.getElementById('next-train');
+                    const secondTrain = document.getElementById('second-train');
+
+                    currentTime.textContent = `Şu anki saat: ${now.getHours()}:${minutes < 10 ? '0' + minutes : minutes}`;
+                    nextTrain.textContent = `İlk tren: ${nextTrainInMinutes} dakika sonra`;
+                    secondTrain.textContent = `Sonraki tren: ${secondTrainInMinutes} dakika sonra`;
+                }
+
+                updateTime();
+                setInterval(updateTime, 60000); // Her dakika güncelle
+            } else {
+                alert('Başlangıç veya gidilecek istasyon bulunamadı.');
+            }
+        }
+    </script>
+</body>
+
+</html>

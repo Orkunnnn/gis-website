@@ -7,14 +7,19 @@
     <title>Metro İstanbul</title>
     <style>
         body {
+            background-image: url('Assets/metroresim.jpg');
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: yellow;
+            background-size: cover;
+            background-position: top;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
-            background: url('Assets/metroresim.jpg') no-repeat center center/cover;
             height: 70vh;
             display: flex;
             flex-direction: column;
@@ -131,10 +136,13 @@
         }
 
         footer {
-            background: #003366;
+            background-color: #003366;
             color: white;
-            padding: 10px;
             text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
 
         footer a {
@@ -146,19 +154,42 @@
             text-decoration: underline;
         }
 
+        .menu-container {
+            /*background-color: rgba(175, 227, 241, 0.8);*/
+            background-color: #0055a5;
+            padding-top: 5px;
+            /* Daha küçük padding */
+            padding-bottom: 5px;
+            /* Daha küçük padding */
+            margin: 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            flex: 0 0 auto;
+            /* Flex değerini sabit hale getirdik */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
         .menu {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 20px auto;
-            flex-wrap: wrap;
+            gap: 10px;
+            /* Reduced gap */
+            margin: auto;
+            flex-wrap: nowrap;
+            padding: 10px;
+            /* Reduced padding */
+            border-radius: 10px;
         }
 
         .menu div {
             background: #003366;
             color: white;
-            padding: 15px;
+            padding: 10px;
+            /* Reduced padding */
             border-radius: 5px;
+            width: auto;
             cursor: pointer;
             text-align: center;
             flex: 1 1 150px;
@@ -167,11 +198,17 @@
         .menu div:hover {
             background: #0055a5;
         }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 
 <body>
-
     <header>
         <div class="navbar">
             <div>
@@ -193,9 +230,12 @@
                     <div class="active">Nasıl Giderim?</div>
                     <div>Hizmet Durumu</div>
                 </div>
-                <input type="text" placeholder="Çıkış Noktası">
-                <input type="text" placeholder="Gidilecek Yer">
-                <button>Planla</button>
+                <form action="map.html" method="get">
+                    <input type="text" id="start" name="start" placeholder="Çıkış Noktası" list="stations">
+                    <input type="text" id="end" name="end" placeholder="Gidilecek Yer" list="stations">
+                    <datalist id="stations"></datalist>
+                    <button type="submit">Planla</button>
+                </form>
                 <div class="icons">
                     <div>
                         <img style="filter: brightness(0) invert(1);" src="Assets/hat.png" alt="Hatlarımız" width="40">
@@ -214,23 +254,36 @@
                 </div>
             </div>
         </div>
-
     </header>
 
-
-
-
-    <div class="menu" id="hatlar">
-        <div>Hatlarımız</div>
-        <div>Ağ Haritaları</div>
-        <div>Sefer Tarifeleri</div>
-        <div>Bilet ve Ücretler</div>
-        <div>Yolculuk Kuralları</div>
-    </div>
+    <main>
+        <div class="menu-container">
+            <div class="menu" id="hatlar">
+                <div>Hatlarımız</div>
+                <div>Ağ Haritaları</div>
+                <div>Sefer Tarifeleri</div>
+                <div>Bilet ve Ücretler</div>
+                <div>Yolculuk Kuralları</div>
+            </div>
+        </div>
+    </main>
 
     <footer id="iletisim">
         <p>&copy; 2025 Metro İstanbul - <a href="#">Çözüm Merkezi</a></p>
     </footer>
+
+    <script>
+        fetch('istasyon.geojson')
+            .then(response => response.json())
+            .then(data => {
+                const datalist = document.getElementById('stations');
+                data.features.forEach(feature => {
+                    const option = document.createElement('option');
+                    option.value = feature.properties.ISTASYON;
+                    datalist.appendChild(option);
+                });
+            });
+    </script>
 </body>
 
 </html>
