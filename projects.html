@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #003366;
+            font-weight: bolder;
+            margin: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #003366;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navbar a:hover {
+            color: #003366
+        }
+
+        .banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1A2943;
+            /* Koyu mavi */
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .banner::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 25%;
+            height: 100%;
+            background-color: #D32F2F;
+            /* Kırmızı */
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+        }
+
+        .banner span {
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div>
+                <a href="/">
+                    <img width="256" style="filter: invert(100%);" src="Assets/itügeomatik.png" alt="itü geomatik">
+                    <img width="256" height="64" src="Assets/nav.png" alt="metro">
+                </a>
+            </div>
+            <div>
+                <a href="index.html">Homepage</a>
+                <a href="/projects.html">Projects</a>
+                <a href="#routes">Routes</a>
+                <a href="#team">Team</a>
+            </div>
+        </div>
+    </header>
+    <div class="banner">
+        <span style="font-size: xx-large;">Projects</span>
+    </div>
+</body>
+
+</html>
