@@ -23,10 +23,13 @@
 
         body {
             font-family: "Roboto", sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         #map {
-            height: 100vh;
+            flex: 1;
             /* Navbar ve alt bilgi ekranı yüksekliği kadar boşluk bırak */
             width: 100%;
             /* Navbar yüksekliği kadar boşluk bırak */
@@ -76,6 +79,25 @@
             width: 300px;
             height: 100px;
         }
+
+        footer {
+            background-color: #121f48;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -98,6 +120,9 @@
         <div id="next-train">İlk tren: -- dakika sonra</div>
         <div id="second-train">Sonraki tren: -- dakika sonra</div>
     </div>
+    <footer>
+        <p>&copy; 2025 Made with ❤️ by Group 1</p>
+    </footer>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         const map = L.map('map', { zoomControl: false }).setView([41.0082, 28.9784], 10); // İstanbul koordinatları

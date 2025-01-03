@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Assets/metro-favicon.png" type="image/gif/png">
+    <title>Kurtköy-Esenyalı Metro Route</title>
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('Assets/fonts/Roboto-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #121f48;
+            font-weight: bolder;
+            margin: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #121f48;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navbar a:hover {
+            color: #121f48
+        }
+
+        footer {
+            background-color: #121f48;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div>
+                <a href="/">
+                    <img width="256" style="filter: invert(100%);" src="Assets/itügeomatik.png" alt="itü geomatik">
+                    <img width="256" height="64" src="Assets/nav.png" alt="metro">
+                </a>
+            </div>
+            <div>
+                <a href="/">Homepage</a>
+                <a href="/projects.html">Projects</a>
+                <a href="#routes">Routes</a>
+                <a href="#team">Team</a>
+            </div>
+        </div>
+    </header>
+    <footer>
+        <p>&copy; 2025 Made with ❤️ by Group 1</p>
+    </footer>
+</body>
+
+</html>
