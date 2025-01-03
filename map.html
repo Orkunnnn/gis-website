@@ -8,32 +8,44 @@
     <link rel="shortcut icon" href="Assets/metro-favicon.png" type="image/gif/png">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('Assets/fonts/Roboto-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
         }
 
         #map {
-            height: calc(100vh - 100px);
+            height: 100vh;
             /* Navbar ve alt bilgi ekranı yüksekliği kadar boşluk bırak */
             width: 100%;
-            margin-top: 60px;
             /* Navbar yüksekliği kadar boşluk bırak */
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             padding: 10px 20px;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.5);
             top: 0;
             z-index: 1000;
-            background-color: #0055a5;
             position: fixed;
             width: 100%;
         }
 
         .navbar a {
-            color: white;
+            color: #003366;
             text-decoration: none;
             margin: 0 10px;
         }

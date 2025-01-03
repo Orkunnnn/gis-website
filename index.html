@@ -7,9 +7,16 @@
     <title>Metro İstanbul</title>
     <link rel="shortcut icon" href="Assets/metro-favicon.png" type="image/gif/png">
     <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('Assets/fonts/Roboto-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             background-image: url('Assets/metroresim.jpg');
-            font-family: Arial, sans-serif;
+            font-family: "Roboto", sans-serif;
             margin: 0;
             padding: 0;
             background-size: cover;
@@ -95,21 +102,26 @@
         }
 
         .planlama .tabs div.active {
-            background: #ff4d4d;
+            background: #D32F2F;
         }
 
         .planlama input {
             width: calc(100% - 20px);
             padding: 10px;
-            margin: 10px 0;
+            margin: 5px 0px;
             border: none;
             border-radius: 5px;
-            background: white;
-            color: black;
+            background: #0055a5;
+            color: white;
+        }
+
+        .planlama input::placeholder {
+            color: white;
         }
 
         .planlama button {
             background: #0055a5;
+            margin: 5px 0px;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -219,10 +231,13 @@
         }
 
         #m15 {
+            border: 3px solid transparent;
+
             background-color: #f85a05;
         }
 
         #m16 {
+            border: 3px solid transparent;
             background-color: #8af244;
         }
 
@@ -238,10 +253,12 @@
         }
 
         .route-option input[type="radio"]:checked+#m16 {
+            border: 3px solid white;
             background-color: #65b133;
         }
 
         .route-option input[type="radio"]:checked+#m15 {
+            border: 3px solid white;
             background-color: #cd4b05;
         }
 
