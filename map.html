@@ -79,7 +79,6 @@
     </style>
 </head>
 
-
 <body>
     <div class="navbar">
         <a href="/">
@@ -101,9 +100,13 @@
     </div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        const map = L.map('map').setView([41.0082, 28.9784], 10); // İstanbul koordinatları
+        const map = L.map('map', { zoomControl: false }).setView([41.0082, 28.9784], 10); // İstanbul koordinatları
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.control.zoom({
+            position: 'bottomright'
         }).addTo(map);
 
         let istasyonlar;
@@ -170,6 +173,19 @@
             const startFeature = istasyonlar.features.find(f => f.properties.ISTASYON.toUpperCase().includes(start));
             const endFeature = istasyonlar.features.find(f => f.properties.ISTASYON.toUpperCase().includes(end));
 
+            istasyonlar.features.forEach(feature => {
+                const coords = feature.geometry.coordinates;
+                const popupContent = `
+        <strong>İstasyon Adı:</strong> ${feature.properties.ISTASYON}<br>
+    `;
+                L.circleMarker([coords[1], coords[0]], {
+                    radius: 5, // Nokta boyutu
+                    color: '#3388ff', // Nokta rengi
+                    fillColor: '#3388ff', // Dolgu rengi
+                    fillOpacity: 1 // Dolgu opaklığı
+                }).bindPopup(popupContent).addTo(map);
+            });
+
             if (startFeature && endFeature) {
                 const startCoords = startFeature.geometry.coordinates;
                 const endCoords = endFeature.geometry.coordinates;
@@ -190,8 +206,13 @@
                 });
 
                 // Başlangıç ve bitiş istasyonlarını haritaya ekleyin
-                L.marker([startCoords[1], startCoords[0]], { icon: startIcon }).bindPopup(startFeature.properties.ISTASYON).addTo(map);
-                L.marker([endCoords[1], endCoords[0]], { icon: endIcon }).bindPopup(endFeature.properties.ISTASYON).addTo(map);
+                L.marker([startCoords[1], startCoords[0]], { icon: startIcon }).bindPopup(`
+    <strong>İstasyon Adı:</strong> ${startFeature.properties.ISTASYON}<br>
+`).addTo(map);
+
+                L.marker([endCoords[1], endCoords[0]], { icon: endIcon }).bindPopup(`
+    <strong>İstasyon Adı:</strong> ${endFeature.properties.ISTASYON}<br>
+`).addTo(map);
 
                 // Tüm rotayı haritaya ekleyin
                 L.geoJSON(rota).addTo(map);
@@ -276,6 +297,32 @@
                 alert('Başlangıç veya gidilecek istasyon bulunamadı.');
             }
         }
+
+        // İskeleler GeoJSON dosyasını al ve haritaya ekle
+        fetch('iskeleler.geojson')
+            .then(response => response.json())
+            .then(data => {
+                const iskeleIcon = L.icon({
+                    iconUrl: 'Assets/iskele.png', // İskele sembolü ikon dosyasının yolu
+                    iconSize: [32, 32], // İkon boyutu
+                    iconAnchor: [16, 32], // İkonun haritadaki konumunu belirleyen nokta
+                    popupAnchor: [0, -32] // Popup'ın ikonun üstünde görünmesini sağlar
+                });
+
+                L.geoJSON(data, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng, { icon: iskeleIcon });
+                    },
+                    onEachFeature: function (feature, layer) {
+                        if (feature.properties && feature.properties.ISKELE_AD) {
+                            layer.bindPopup(feature.properties.ISKELE_AD);
+                        }
+                    }
+                }).addTo(map);
+            })
+            .catch(error => {
+                console.error('İskeleler GeoJSON yüklenemedi:', error);
+            });
     </script>
 </body>
 
