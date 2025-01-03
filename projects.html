@@ -104,6 +104,25 @@
 
         }
 
+        footer {
+            background-color: #121f48;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .banner::after {
                 display: none;
@@ -222,25 +241,6 @@
             .metro {
                 padding: 10px;
             }
-
-            footer {
-                background-color: #121f48;
-                color: white;
-                text-align: center;
-                padding: 10px 0;
-                position: relative;
-                bottom: 0;
-                width: 100%;
-            }
-
-            footer a {
-                color: #ffcc00;
-                text-decoration: none;
-            }
-
-            footer a:hover {
-                text-decoration: underline;
-            }
         }
     </style>
 </head>
@@ -254,7 +254,7 @@
                     <img width="256" height="64" src="Assets/nav.png" alt="metro">
                 </a>
             </div>
-            <div>
+            <div class="menu">
                 <a href="index.html">Homepage</a>
                 <a href="/projects.html">Projects</a>
                 <a href="#routes">Routes</a>
@@ -275,18 +275,18 @@
             <div class="metro">
                 <div id="m15">M15</div>
                 <h2 class="title">Kurtköy-Esenyalı Metro Route</h2>
-                <p class="description">Hat sahil bölgesinden Sabiha Gökçen Havalimanı'na ulaşacak olan ...</p>
+                <p class="description">The route is planned to start from M4 Kurtköy station and reach to ...</p>
                 <a href="/m15.html" class="read-more">devamı</a>
             </div>
         </div>
         <div class="card">
             <div class="map-container">
-                <img src="/map-image.jpg" alt="Metro güzergah haritası">
+                <img src="/Assets/m16.png" alt="Metro güzergah haritası">
             </div>
             <div class="metro">
                 <div id="m16">M16</div>
                 <h2 class="title">Fıstıkağacı-Beykoz Metro Route</h2>
-                <p class="description">Hat sahil bölgesinden Sabiha Gökçen Havalimanı'na ulaşacak olan ...</p>
+                <p class="description">The route is planned to start from M5 Fıstıkağacı station and reach ...</p>
                 <a href="/m16.html" class="read-more">devamı</a>
             </div>
         </div>
@@ -294,6 +294,13 @@
     <footer>
         <p>&copy; 2025 Made with ❤️ by Group 1</p>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.navbar .menu');
+            menu.classList.toggle('active');
+        }
+    </script>
 </body>
 
 </html>
