@@ -218,6 +218,14 @@
             display: none;
         }
 
+        #m15 {
+            background-color: #f85a05;
+        }
+
+        #m16 {
+            background-color: #8af244;
+        }
+
         .route-option span {
             display: inline-block;
             width: 100px;
@@ -229,8 +237,12 @@
             cursor: pointer;
         }
 
-        .route-option input[type="radio"]:checked+span {
-            background-color: #f85a05;
+        .route-option input[type="radio"]:checked+#m16 {
+            background-color: #65b133;
+        }
+
+        .route-option input[type="radio"]:checked+#m15 {
+            background-color: #cd4b05;
         }
 
         .tab-content {
@@ -279,11 +291,11 @@
                     <form action="map.html" method="get">
                         <label class="route-option">
                             <input type="radio" name="route" value="rota">
-                            <span style="background-color: #f85a05;">M15</span>
+                            <span id="m15">M15</span>
                         </label>
                         <label class="route-option">
                             <input type="radio" name="route" value="rota2">
-                            <span style="background-color: #8af244;">M16</span>
+                            <span id="m16">M16</span>
                         </label>
                         <input type="text" id="start" name="start" placeholder="Starting Point" list="stations">
                         <input type="text" id="end" name="end" placeholder="Destination Point" list="stations">
