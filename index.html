@@ -463,6 +463,35 @@
     </footer>
 
     <script>
+        document.querySelectorAll('.tabs div').forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Remove active classes
+                document.querySelectorAll('.tabs div').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                // Add active class
+                this.classList.add('active');
+                const content = document.getElementById(this.getAttribute('data-tab'));
+                content.classList.add('active');
+
+                // Check if at bottom
+                const windowHeight = window.innerHeight;
+                const documentHeight = Math.max(
+                    document.body.scrollHeight,
+                    document.documentElement.scrollHeight
+                );
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const isAtBottom = Math.ceil(scrollTop + windowHeight) >= documentHeight - 2;
+
+                if (isAtBottom) {
+                    setTimeout(() => {
+                        window.scrollTo(0, document.documentElement.scrollHeight);
+                        document.body.style.minHeight = '100vh';
+                        document.body.offsetHeight; // Force reflow
+                    }, 10);
+                }
+            });
+        });
         const closeBtn = document.querySelector('.close-btn');
 
         closeBtn.addEventListener('click', () => {
