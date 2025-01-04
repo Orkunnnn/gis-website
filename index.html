@@ -28,7 +28,6 @@
         }
 
         header {
-            height: 70vh;
             display: flex;
             flex-direction: column;
             text-align: center;
@@ -277,6 +276,90 @@
         .tabs .active {
             font-weight: bold;
         }
+
+        .logo {
+            width: 256px;
+            height: 64px;
+        }
+
+        .close-btn {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #121f48;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                position: fixed;
+                right: 20px;
+                top: 20px;
+                z-index: 1001;
+            }
+
+            .close-btn {
+                display: block;
+                position: fixed;
+                left: 20px;
+                top: 20px;
+                font-size: 30px;
+                background: none;
+                border: none;
+                color: #121f48;
+                cursor: pointer;
+                z-index: 1001;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                transition-delay: 0.3s, 0s;
+            }
+
+            .menu.active .close-btn {
+                display: block;
+                opacity: 1;
+            }
+
+            .menu:not(.active) .close-btn {
+                transition-delay: 0s;
+                transition: none;
+            }
+
+            .logo {
+                width: 200px;
+                height: 50px;
+            }
+
+            .menu {
+                display: block;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                padding-top: 80px;
+                transition: all 0.3s ease-in-out;
+                z-index: 1000;
+            }
+
+            .menu.active {
+                right: 0;
+            }
+
+            .menu a {
+                display: block;
+                text-align: center;
+                font-size: 24px;
+                margin: 20px 0;
+                color: #121f48;
+            }
+        }
     </style>
 </head>
 
@@ -285,12 +368,13 @@
         <div class="navbar">
             <div>
                 <a href="/">
-                    <img width="256" style="filter: invert(100%);" src="Assets/itügeomatik.png" alt="itü geomatik">
-                    <img width="256" height="64" src="Assets/nav.png" alt="metro">
+                    <img class="logo" src="Assets/nav.png" alt="metro">
                 </a>
             </div>
-            <div>
-                <a href="/">Homepage</a>
+            <button class="hamburger">☰</button>
+            <div class="menu">
+                <button class="close-btn">&times;</button>
+                <a href="index.html">Homepage</a>
                 <a href="/projects.html">Projects</a>
                 <a href="#routes">Routes</a>
                 <a href="#team">Team</a>
@@ -366,6 +450,18 @@
     </footer>
 
     <script>
+        const closeBtn = document.querySelector('.close-btn');
+
+        closeBtn.addEventListener('click', () => {
+            menu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        const hamburger = document.querySelector('.hamburger');
+        const menu = document.querySelector('.menu');
+
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
         document.querySelectorAll('.tabs div').forEach(tab => {
             tab.addEventListener('click', function () {
                 document.querySelectorAll('.tabs div').forEach(t => t.classList.remove('active'));
