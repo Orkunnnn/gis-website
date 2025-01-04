@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "bizimistasyonlar",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::5254" } },
+"features": [
+{ "type": "Feature", "properties": { "ISTASYON": "TEPE MAHALLESİ" }, "geometry": { "type": "Point", "coordinates": [ 443803.885389964852948, 4526823.146469630300999 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "KONAŞLI" }, "geometry": { "type": "Point", "coordinates": [ 444276.497680020635016, 4527608.580370245501399 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "ESENYALI" }, "geometry": { "type": "Point", "coordinates": [ 440629.002587398863398, 4525662.750138626433909 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "AHMET YESEVI" }, "geometry": { "type": "Point", "coordinates": [ 442084.547451760503463, 4526199.620760040357709 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "ORHANLI" }, "geometry": { "type": "Point", "coordinates": [ 445636.18442523595877, 4528622.786961322650313 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "SABANCI ÜNİVERSİTESİ" }, "geometry": { "type": "Point", "coordinates": [ 447110.624008069571573, 4528385.625667398795485 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "TEPEVİRAN" }, "geometry": { "type": "Point", "coordinates": [ 448965.808456664672121, 4530711.630665501579642 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "OKAN ÜNİVERSİTESİ-İSTANBUL PARK" }, "geometry": { "type": "Point", "coordinates": [ 448898.984678622509819, 4535066.741109138354659 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "HARMANDERE" }, "geometry": { "type": "Point", "coordinates": [ 443192.942585429700557, 4533357.502072145231068 ] } },
+{ "type": "Feature", "properties": { "ISTASYON": "KURTKÖY" }, "geometry": { "type": "Point", "coordinates": [ 440711.402556579909287, 4530829.536254676058888 ] } }
+]
+}

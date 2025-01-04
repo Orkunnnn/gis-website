@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro İstanbul</title>
+    <link rel="shortcut icon" href="Assets/metro-favicon.png" type="image/gif/png">
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('Assets/fonts/Roboto-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-image: url('Assets/metroresim.jpg');
+            font-family: "Roboto", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-position: top;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #121f48;
+            font-weight: bolder;
+            margin: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #121f48;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navbar a:hover {
+            color: #121f48
+        }
+
+        .plan {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .planlama {
+            background: #121f48;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 600px;
+            min-width: 500px;
+            text-align: center;
+        }
+
+        .planlama h2 {
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .planlama .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .planlama .tabs div {
+            flex: 1;
+            padding: 10px;
+            background: #0055a5;
+            color: white;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .planlama .tabs div.active {
+            background: #da262e;
+        }
+
+        .planlama input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0px;
+            border: none;
+            border-radius: 5px;
+            background: #0055a5;
+            color: white;
+        }
+
+        .planlama input::placeholder {
+            color: white;
+        }
+
+        .planlama button {
+            background: #0055a5;
+            margin: 5px 0px;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .planlama button:hover {
+            background: #0077cc;
+        }
+
+        .planlama .icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .planlama .icons div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background-color: #121f48;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .menu-container {
+            /*background-color: rgba(175, 227, 241, 0.8);*/
+            background-color: #0055a5;
+            padding-top: 5px;
+            /* Daha küçük padding */
+            padding-bottom: 5px;
+            /* Daha küçük padding */
+            margin: 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            flex: 0 0 auto;
+            /* Flex değerini sabit hale getirdik */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            /* Reduced gap */
+            margin: auto;
+            flex-wrap: nowrap;
+            padding: 10px;
+            /* Reduced padding */
+            border-radius: 10px;
+        }
+
+        .menu div {
+            background: #121f48;
+            color: white;
+            padding: 10px;
+            /* Reduced padding */
+            border-radius: 5px;
+            width: auto;
+            cursor: pointer;
+            text-align: center;
+            flex: 1 1 150px;
+        }
+
+        .menu div:hover {
+            background: rgb(6, 61, 112);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .route-option {
+            display: inline-block;
+            margin: 10px;
+            font-size: 20px;
+        }
+
+        .route-option input[type="radio"] {
+            display: none;
+        }
+
+        #m15 {
+            border: 3px solid transparent;
+
+            background-color: #f85a05;
+        }
+
+        #m16 {
+            border: 3px solid transparent;
+            background-color: #8af244;
+        }
+
+        .route-option span {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .route-option input[type="radio"]:checked+#m16 {
+            border: 3px solid white;
+            background-color: #65b133;
+        }
+
+        .route-option input[type="radio"]:checked+#m15 {
+            border: 3px solid white;
+            background-color: #cd4b05;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tabs div {
+            cursor: pointer;
+        }
+
+        .tabs .active {
+            font-weight: bold;
+        }
+
+        .logo {
+            width: 256px;
+            height: 64px;
+        }
+
+        .close-btn {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #121f48;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                position: fixed;
+                right: 20px;
+                top: 20px;
+                z-index: 1001;
+            }
+
+            .close-btn {
+                display: block;
+                position: fixed;
+                left: 20px;
+                top: 20px;
+                font-size: 30px;
+                background: none;
+                border: none;
+                color: #121f48;
+                cursor: pointer;
+                z-index: 1001;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                transition-delay: 0.3s, 0s;
+            }
+
+            .menu.active .close-btn {
+                display: block;
+                opacity: 1;
+            }
+
+            .menu:not(.active) .close-btn {
+                transition-delay: 0s;
+                transition: none;
+            }
+
+            .logo {
+                width: 200px;
+                height: 50px;
+            }
+
+            .menu {
+                display: block;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                padding-top: 80px;
+                transition: all 0.3s ease-in-out;
+                z-index: 1000;
+            }
+
+            .menu.active {
+                right: 0;
+            }
+
+            .menu a {
+                display: block;
+                text-align: center;
+                font-size: 24px;
+                margin: 20px 0;
+                color: #121f48;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div>
+                <a href="/">
+                    <img class="logo" src="Assets/nav.png" alt="metro">
+                </a>
+            </div>
+            <button class="hamburger">☰</button>
+            <div class="menu">
+                <button class="close-btn">&times;</button>
+                <a href="index.html">Homepage</a>
+                <a href="/projects.html">Projects</a>
+                <a href="#routes">Routes</a>
+                <a href="#team">Team</a>
+            </div>
+        </div>
+        <h1 style="margin-top: 40px;">SAFE PUNCTUAL COMFORTABLE</h1>
+        <div class="plan">
+            <div class="planlama" id="planlama">
+                <h2>Plan your travel</h2>
+                <div class="tabs">
+                    <div class="active" data-tab="how-can-i-go">How can I go?</div>
+                    <div data-tab="service-status">Service Status</div>
+                </div>
+                <div id="how-can-i-go" class="tab-content active">
+                    <form action="map.html" method="get">
+                        <label class="route-option">
+                            <input type="radio" name="route" value="rota">
+                            <span id="m15">M15</span>
+                        </label>
+                        <label class="route-option">
+                            <input type="radio" name="route" value="rota2">
+                            <span id="m16">M16</span>
+                        </label>
+                        <input type="text" id="start" name="start" placeholder="Starting Point" list="stations">
+                        <input type="text" id="end" name="end" placeholder="Destination Point" list="stations">
+                        <datalist id="stations"></datalist>
+                        <button type="submit">Plan</button>
+                    </form>
+                    <div class="icons">
+                        <div>
+                            <img style="filter: brightness(0) invert(1);" src="Assets/hat.png" alt="Hatlarımız"
+                                width="40">
+                            <p>Routes</p>
+                        </div>
+                        <div>
+                            <img style="filter: brightness(0) invert(1);" src="Assets/konum.png" alt="Network Maps"
+                                width="40">
+                            <p>Network Maps</p>
+                        </div>
+                        <div>
+                            <img style="filter: brightness(0) invert(1);" src="Assets/sefer.png" alt="Schedule"
+                                width="40">
+                            <p>Schedule</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="service-status" class="tab-content">
+                    <p>All our services are continuing without any issues.</p>
+                    <p style="font-weight: bold;">We wish you a pleasant journey.</p>
+                    <img style="filter: brightness(0) invert(1);" src="Assets/voyage-ok-icon.png" alt="ok">
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="menu-container">
+            <div class="menu" id="hatlar">
+                <div>Routes</div>
+                <div>Network Maps</div>
+                <div>Schedule</div>
+                <div>Tickets and Fees</div>
+                <div>Travel Rules</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Made with ❤️ by Group 1</p>
+    </footer>
+
+    <script>
+        const closeBtn = document.querySelector('.close-btn');
+
+        closeBtn.addEventListener('click', () => {
+            menu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        const hamburger = document.querySelector('.hamburger');
+        const menu = document.querySelector('.menu');
+
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+        document.querySelectorAll('.tabs div').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.tabs div').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                this.classList.add('active');
+                document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+            });
+        });
+        const routes = {
+            rota: 'istasyon.geojson',
+            rota2: 'istasyon2.geojson'
+        };
+
+        document.querySelectorAll('input[name="route"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                const selectedRoute = this.value;
+                fetch(routes[selectedRoute])
+                    .then(response => response.json())
+                    .then(data => {
+                        const datalist = document.getElementById('stations');
+                        datalist.innerHTML = '';
+                        data.features.forEach(feature => {
+                            const option = document.createElement('option');
+                            option.value = feature.properties.ISTASYON;
+                            datalist.appendChild(option);
+                        });
+                    });
+            });
+        });
+
+        // İlk yüklemede varsayılan rota için istasyonları yükle
+        document.querySelector('input[name="route"]:checked').dispatchEvent(new Event('change'));
+    </script>
+</body>
+
+</html>
