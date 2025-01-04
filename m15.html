@@ -118,6 +118,38 @@
             height: 64px;
         }
 
+        .banner {
+            display: flex;
+            align-items: center;
+            background-color: #121f48;
+            /* Koyu mavi */
+            color: white;
+            padding: 10px 20px;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .banner p {
+            font-size: 3rem;
+        }
+
+        .banner::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 35%;
+            height: 100%;
+            background-color: #da262e;
+            /* Kırmızı */
+            clip-path: polygon(0 100%, 15% 0, 100% 0, 100% 100%);
+        }
+
+        .banner span {
+            z-index: 1;
+        }
+
         @media (max-width: 768px) {
             .content {
                 display: flex;
@@ -204,6 +236,18 @@
                 width: 200px;
                 height: 50px;
             }
+
+            .banner::after {
+                display: none;
+            }
+
+            .banner {
+                justify-content: center;
+            }
+
+            .banner p {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -226,6 +270,9 @@
             </div>
         </div>
     </header>
+    <div class="banner">
+        <p>Projects</p>
+    </div>
     <div class="content">
         <p class="metro-title"><span class="metrofirst">M</span>Kurtköy-Esenyalı Metro Route</p>
         <span class="divider"></span>
@@ -240,7 +287,7 @@
                 <p>Hat Uzunluğu 25 KM</p>
             </div>
             <div class="spec2">
-                <img src="Assets/metro.png" alt="metro">
+                <img src="Assets/zaman.png" alt="metro">
                 <p>Seyahat Süresi x DK</p>
             </div>
         </div>
