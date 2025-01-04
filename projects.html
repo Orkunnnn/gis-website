@@ -91,17 +91,11 @@
             z-index: 1;
         }
 
-        .content {
-            display: flex;
-            flex-direction: column;
-        }
-
         .divider {
             display: block;
             width: 100%;
             height: 1px;
             background-color: rgba(69, 109, 144, 1);
-
         }
 
         footer {
@@ -141,7 +135,106 @@
             display: none;
         }
 
-        @media (max-width: 768px) {
+        .metrofirst {
+            color: #ea131d;
+            font-size: 80px;
+            font-weight: bold;
+        }
+
+        .metro-title {
+            margin: 10px auto 10px 0px;
+            color: #121f48;
+            font-size: 40px;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin: 0 auto;
+            width: 70%;
+        }
+
+        .card {
+            width: 50%;
+            margin: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 100%;
+            background: #f5f5f5;
+        }
+
+        .map-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #m15 {
+            width: 60px;
+            height: 60px;
+            background-color: #f85a05;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+        }
+
+        #m16 {
+            width: 60px;
+            height: 60px;
+            background-color: #8af244;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+        }
+
+        .title {
+            color: #1a237e;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .read-more {
+            color: #1a237e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            border-bottom: 2px solid #1a237e;
+            display: inline-block;
+        }
+
+        .metro-section {
+            display: flex;
+            place-items: center;
+        }
+
+        .metro {
+            padding: 10px;
+        }
+
+        @media (max-width: 1080px) {
             .hamburger {
                 display: block;
                 right: 20px;
@@ -217,7 +310,7 @@
                 display: flex;
                 align-items: center;
                 flex-direction: column;
-                margin: 0px 20px;
+                min-width: 90%;
             }
 
             span::first-letter {
@@ -234,11 +327,10 @@
                 width: 100%;
                 height: 1px;
                 background-color: rgba(69, 109, 144, 1);
-
             }
 
             .card {
-                width: 300px;
+                width: 100%;
                 margin: 20px;
                 background: white;
                 border-radius: 8px;
@@ -248,7 +340,7 @@
 
             .map-container {
                 width: 100%;
-                height: 200px;
+                height: 100%;
                 background: #f5f5f5;
             }
 
@@ -314,13 +406,197 @@
             }
 
             .metro-title {
-                margin: 10px auto 10px 0px;
                 color: #121f48;
                 font-size: 25px;
             }
 
-            .metro {
-                padding: 10px;
+            .metro-section {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 512px) {
+            .hamburger {
+                display: block;
+                right: 20px;
+                top: 20px;
+                z-index: 1001;
+            }
+
+            .close-btn {
+                display: block;
+                position: fixed;
+                left: 20px;
+                top: 20px;
+                font-size: 30px;
+                background: none;
+                border: none;
+                color: #121f48;
+                cursor: pointer;
+                z-index: 1001;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                transition-delay: 0.3s, 0s;
+            }
+
+            .menu.active .close-btn {
+                display: block;
+                opacity: 1;
+            }
+
+            .menu:not(.active) .close-btn {
+                transition-delay: 0s;
+                transition: none;
+            }
+
+            .logo {
+                width: 200px;
+                height: 50px;
+            }
+
+            .menu {
+                display: block;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                padding-top: 80px;
+                transition: all 0.3s ease-in-out;
+                z-index: 1000;
+            }
+
+            .menu.active {
+                right: 0;
+            }
+
+            .menu a {
+                display: block;
+                text-align: center;
+                font-size: 24px;
+                margin: 20px 0;
+                color: #121f48;
+            }
+
+            .banner::after {
+                display: none;
+            }
+
+            .banner {
+                justify-content: center;
+            }
+
+            .content {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                min-width: 90%;
+            }
+
+            span::first-letter {
+                font-size: 70px;
+                color: #ea131d;
+            }
+
+            .banner p {
+                font-size: 2rem;
+            }
+
+            .divider {
+                display: block;
+                width: 100%;
+                height: 1px;
+                background-color: rgba(69, 109, 144, 1);
+
+            }
+
+            .card {
+                width: 100%;
+                margin: 20px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+            }
+
+            .map-container {
+                width: 100%;
+                height: 100%;
+                background: #f5f5f5;
+            }
+
+            .map-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            #m15 {
+                width: 60px;
+                height: 60px;
+                background-color: #f85a05;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 24px;
+                color: white;
+            }
+
+            #m16 {
+                width: 60px;
+                height: 60px;
+                background-color: #8af244;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 24px;
+                color: white;
+            }
+
+            .title {
+                color: #1a237e;
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+
+            .description {
+                color: #666;
+                font-size: 14px;
+                margin-bottom: 16px;
+            }
+
+            .read-more {
+                color: #1a237e;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 14px;
+                border-bottom: 2px solid #1a237e;
+                display: inline-block;
+            }
+
+            .metrofirst {
+                color: #ea131d;
+                font-size: 60px;
+                font-weight: bold;
+            }
+
+            .metro-title {
+                color: #121f48;
+                font-size: 25px;
+            }
+
+            .metro-section {
+                display: flex;
+                flex-direction: column;
             }
         }
     </style>
@@ -350,26 +626,28 @@
     <div class="content">
         <p class="metro-title"><span class="metrofirst">M</span>etro Hatları</p>
         <span class="divider"></span>
-        <div class="card">
-            <div class="map-container">
-                <img src="/map-image.jpg" alt="Metro güzergah haritası">
+        <div class="metro-section">
+            <div class="card">
+                <div class="map-container">
+                    <img src="Assets/m15.png" alt="Metro güzergah haritası">
+                </div>
+                <div class="metro">
+                    <div id="m15">M15</div>
+                    <h2 class="title">Kurtköy-Esenyalı Metro Route</h2>
+                    <p class="description">The route is planned to start from M4 Kurtköy station and reach to ...</p>
+                    <a href="/m15.html" class="read-more">devamı</a>
+                </div>
             </div>
-            <div class="metro">
-                <div id="m15">M15</div>
-                <h2 class="title">Kurtköy-Esenyalı Metro Route</h2>
-                <p class="description">The route is planned to start from M4 Kurtköy station and reach to ...</p>
-                <a href="/m15.html" class="read-more">devamı</a>
-            </div>
-        </div>
-        <div class="card">
-            <div class="map-container">
-                <img src="/Assets/m16.png" alt="Metro güzergah haritası">
-            </div>
-            <div class="metro">
-                <div id="m16">M16</div>
-                <h2 class="title">Fıstıkağacı-Beykoz Metro Route</h2>
-                <p class="description">The route is planned to start from M5 Fıstıkağacı station and reach ...</p>
-                <a href="/m16.html" class="read-more">devamı</a>
+            <div class="card">
+                <div class="map-container">
+                    <img src="/Assets/m16.png" alt="Metro güzergah haritası">
+                </div>
+                <div class="metro">
+                    <div id="m16">M16</div>
+                    <h2 class="title">Fıstıkağacı-Beykoz Metro Route</h2>
+                    <p class="description">The route is planned to start from M5 Fıstıkağacı station and reach ...</p>
+                    <a href="/m16.html" class="read-more">devamı</a>
+                </div>
             </div>
         </div>
     </div>
