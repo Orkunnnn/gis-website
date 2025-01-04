@@ -88,14 +88,12 @@
             margin: 10px;
             color: #121f48;
             font-size: 25px;
-            text-align: center;
         }
 
         .integration-title {
             margin: 10px;
             color: #121f48;
             font-size: 25px;
-            text-align: center;
         }
 
         .integrationfirst {
@@ -124,7 +122,6 @@
             background-color: #121f48;
             /* Koyu mavi */
             color: white;
-            padding: 10px 20px;
             font-size: 24px;
             font-family: Arial, sans-serif;
             position: relative;
@@ -150,7 +147,7 @@
             z-index: 1;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 512px) {
             .content {
                 display: flex;
                 flex-direction: column;
@@ -241,12 +238,14 @@
                 display: none;
             }
 
-            .banner {
-                justify-content: center;
-            }
-
             .banner p {
                 font-size: 2rem;
+            }
+
+            .banner-text {
+                display: inline;
+                min-width: 90%;
+                margin: 0 auto;
             }
         }
     </style>
@@ -271,7 +270,9 @@
         </div>
     </header>
     <div class="banner">
-        <p>Projects</p>
+        <div class="banner-text">
+            <p>Projects</p>
+        </div>
     </div>
     <div class="content">
         <p class="metro-title"><span class="metrofirst">M</span>Kurtköy-Esenyalı Metro Route</p>
