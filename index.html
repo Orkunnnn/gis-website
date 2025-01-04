@@ -14,6 +14,10 @@
             font-style: normal;
         }
 
+        html {
+            overflow-x: hidden;
+        }
+
         body {
             background-image: url('Assets/metroresim.jpg');
             font-family: "Roboto", sans-serif;
@@ -25,6 +29,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         header {
@@ -114,6 +119,10 @@
             color: white;
         }
 
+        .planlama input:focus {
+            outline: none;
+        }
+
         .planlama input::placeholder {
             color: white;
         }
@@ -156,6 +165,7 @@
             position: relative;
             bottom: 0;
             width: 100%;
+            margin-top: auto;
         }
 
         footer a {
@@ -182,34 +192,6 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-        }
-
-        .menu {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            /* Reduced gap */
-            margin: auto;
-            flex-wrap: nowrap;
-            padding: 10px;
-            /* Reduced padding */
-            border-radius: 10px;
-        }
-
-        .menu div {
-            background: #121f48;
-            color: white;
-            padding: 10px;
-            /* Reduced padding */
-            border-radius: 5px;
-            width: auto;
-            cursor: pointer;
-            text-align: center;
-            flex: 1 1 150px;
-        }
-
-        .menu div:hover {
-            background: rgb(6, 61, 112);
         }
 
         main {
@@ -358,6 +340,46 @@
                 margin: 20px 0;
                 color: #121f48;
             }
+
+            .plan {
+                margin: 50px;
+
+            }
+
+            .planlama {
+                background: #121f48;
+                color: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+                text-align: center;
+                min-width: 100%;
+                min-height: 200px;
+            }
+
+            .route-option span {
+                display: inline-block;
+                width: 80px;
+                height: 80px;
+                line-height: 80px;
+                border-radius: 50%;
+                color: white;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .metro-text {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                font-size: 40px;
+            }
+
+            .tabs {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -379,7 +401,11 @@
                 <a href="#team">Team</a>
             </div>
         </div>
-        <h1 style="margin-top: 40px;">SAFE PUNCTUAL COMFORTABLE</h1>
+        <h1 class="metro-text">
+            <span>SAFE</span>
+            <span>PUNCTUAL</span>
+            <span>COMFORTABLE</span>
+        </h1>
         <div class="plan">
             <div class="planlama" id="planlama">
                 <h2>Plan your travel</h2>
@@ -431,18 +457,6 @@
             </div>
         </div>
     </header>
-
-    <main>
-        <div class="menu-container">
-            <div class="menu" id="hatlar">
-                <div>Routes</div>
-                <div>Network Maps</div>
-                <div>Schedule</div>
-                <div>Tickets and Fees</div>
-                <div>Travel Rules</div>
-            </div>
-        </div>
-    </main>
 
     <footer>
         <p>&copy; 2025 Made with ❤️ by Group 1</p>
