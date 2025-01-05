@@ -176,13 +176,16 @@
             text-align: center;
         }
 
+        .close-btn {
+            display: none;
+        }
+
         @media (max-width:1080px) {
             .content {
                 display: flex;
                 flex-direction: column;
-                margin: 0px 20px;
-                width: 100%;
-                align-items: center;
+                margin: 0px auto;
+                width: 90%;
             }
 
             .divider {
@@ -274,15 +277,19 @@
                 min-width: 90%;
                 margin: 0 auto;
             }
+
+            .metro-image {
+                width: 100%;
+            }
         }
 
 
         @media (max-width: 512px) {
             .content {
                 display: flex;
-                align-items: center;
                 flex-direction: column;
-                width: 100%;
+                width: 90%;
+                margin: 0px 20px;
             }
 
             .divider {

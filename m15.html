@@ -147,10 +147,153 @@
             z-index: 1;
         }
 
+        .banner span {
+            z-index: 1;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            width: 70%;
+        }
+
+        .banner-text {
+            display: inline;
+            min-width: 70%;
+            margin: 0 auto;
+        }
+
+        .divider {
+            display: block;
+            width: 100%;
+            height: 1px;
+            background-color: rgba(69, 109, 144, 1);
+        }
+
+        .specifications {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .spec1,
+        .spec2 {
+            text-align: center;
+        }
+
+        .close-btn {
+            display: none;
+        }
+
+        @media (max-width:1080px) {
+            .content {
+                display: flex;
+                flex-direction: column;
+                margin: 0px auto;
+                width: 90%;
+            }
+
+            .divider {
+                display: block;
+                width: 100%;
+                height: 1px;
+                background-color: rgba(69, 109, 144, 1);
+            }
+
+            .specifications {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .spec1,
+            .spec2 {
+                text-align: center;
+            }
+
+            .hamburger {
+                display: block;
+                right: 20px;
+                top: 20px;
+                z-index: 1001;
+            }
+
+            .close-btn {
+                display: block;
+                position: fixed;
+                left: 20px;
+                top: 20px;
+                font-size: 30px;
+                background: none;
+                border: none;
+                color: #121f48;
+                cursor: pointer;
+                z-index: 1001;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+                transition-delay: 0.3s, 0s;
+            }
+
+            .menu.active .close-btn {
+                display: block;
+                opacity: 1;
+            }
+
+            .menu:not(.active) .close-btn {
+                transition-delay: 0s;
+                transition: none;
+            }
+
+            .menu {
+                display: block;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                padding-top: 80px;
+                transition: all 0.3s ease-in-out;
+                z-index: 1000;
+            }
+
+            .menu.active {
+                right: 0;
+            }
+
+            .menu a {
+                display: block;
+                text-align: center;
+                font-size: 24px;
+                margin: 20px 0;
+                color: #121f48;
+            }
+
+            .logo {
+                width: 200px;
+                height: 50px;
+            }
+
+            .banner p {
+                font-size: 2rem;
+            }
+
+            .banner-text {
+                display: inline;
+                min-width: 90%;
+                margin: 0 auto;
+            }
+
+            .metro-image {
+                width: 100%;
+            }
+        }
+
+
         @media (max-width: 512px) {
             .content {
                 display: flex;
                 flex-direction: column;
+                width: 90%;
                 margin: 0px 20px;
             }
 
@@ -247,6 +390,10 @@
                 min-width: 90%;
                 margin: 0 auto;
             }
+
+            .metro-image {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -278,7 +425,7 @@
         <p class="metro-title"><span class="metrofirst">M</span>Kurtköy-Esenyalı Metro Route</p>
         <span class="divider"></span>
         <p>The route is planned to start from M4 Kurtköy station and reach to the M4 Pendik-Tuzla extension route.</p>
-        <img src="Assets/m15.png" alt="M15 Metro Route">
+        <img class="metro-image" src="Assets/m15.png" alt="M15 Metro Route">
         <p class="integration-title"><span class="integrationfirst">I</span>ntegration with other routes</p>
         <span class="divider"></span>
         <p>Integration with M4 line is planned at Kurtköy and its extension Esenyalı stations.</p>
