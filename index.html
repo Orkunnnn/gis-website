@@ -82,6 +82,13 @@
             text-align: center;
         }
 
+        .planlama form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .planlama h2 {
             padding: 10px;
             border-radius: 5px;
@@ -277,6 +284,25 @@
             color: #121f48;
         }
 
+        select {
+            width: 100%;
+            padding: 10px;
+            appearance: none;
+            margin: 5px 0;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: #0055a5;
+            color: white;
+            height: 40px;
+        }
+
+        .error-message {
+            color: #ff3333;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .hamburger {
                 display: block;
@@ -414,18 +440,25 @@
                 </div>
                 <div id="how-can-i-go" class="tab-content active">
                     <form action="map.html" method="get">
-                        <label class="route-option">
-                            <input type="radio" name="route" value="rota">
-                            <span id="m15">M15</span>
-                        </label>
-                        <label class="route-option">
-                            <input type="radio" name="route" value="rota2">
-                            <span id="m16">M16</span>
-                        </label>
-                        <input type="text" id="start" name="start" placeholder="Starting Point" list="stations">
-                        <input type="text" id="end" name="end" placeholder="Destination Point" list="stations">
+                        <div class="routes">
+                            <label class="route-option">
+                                <input type="radio" name="route" value="rota">
+                                <span id="m15">M15</span>
+                            </label>
+                            <label class="route-option">
+                                <input type="radio" name="route" value="rota2">
+                                <span id="m16">M16</span>
+                            </label>
+                        </div>
+                        <select id="start" name="start">
+                            <option value="" disabled selected hidden>Starting Point</option>
+                        </select>
+                        <select id="end" name="end">
+                            <option value="" disabled selected hidden>Destination Point</option>
+                        </select>
                         <datalist id="stations"></datalist>
                         <button type="submit">Plan</button>
+                        <div class="error-message">Please select both starting point and destination point</div>
                     </form>
                     <div class="icons">
                         <div>
@@ -512,6 +545,7 @@
                 document.getElementById(this.getAttribute('data-tab')).classList.add('active');
             });
         });
+
         const routes = {
             rota: 'istasyon.geojson',
             rota2: 'istasyon2.geojson'
@@ -523,15 +557,32 @@
                 fetch(routes[selectedRoute])
                     .then(response => response.json())
                     .then(data => {
-                        const datalist = document.getElementById('stations');
-                        datalist.innerHTML = '';
+                        const start = document.getElementById('start');
+                        const end = document.getElementById('end');
+                        // Clear existing options except first placeholder
+                        start.innerHTML = '<option value="" disabled selected>Starting Point</option>';
+                        end.innerHTML = '<option value="" disabled selected>Destination Point</option>';
+                        // Add new options
                         data.features.forEach(feature => {
-                            const option = document.createElement('option');
-                            option.value = feature.properties.ISTASYON;
-                            datalist.appendChild(option);
+                            const station = feature.properties.ISTASYON;
+                            start.add(new Option(station, station));
+                            end.add(new Option(station, station));
                         });
                     });
             });
+        });
+
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
+            const errorMessage = document.querySelector('.error-message');
+
+            if (!start || !end) {
+                e.preventDefault();
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
         });
 
         // İlk yüklemede varsayılan rota için istasyonları yükle
