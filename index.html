@@ -579,8 +579,14 @@
 
             if (!start || !end) {
                 e.preventDefault();
+                errorMessage.innerHTML = 'Please select both starting point and destination point';
                 errorMessage.style.display = 'block';
-            } else {
+            } else if (start === end) {
+                e.preventDefault();
+                errorMessage.innerHTML = 'Starting point and destination point cannot be the same';
+                errorMessage.style.display = 'block';
+            }
+            else {
                 errorMessage.style.display = 'none';
             }
         });
