@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "metrobus4326",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "SDURAKKODU": 214673, "SDURAKADI": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ", "ILCEADI": "Üsküdar", "SYON": "BAGLARBASI", "AKILLI": "YOK", "FIZIKI": "KAPALI", "DURAK_TIPI": "İSTON GENİŞ_İBB", "ENGELLIKULLANIM": "Uygun Degil", "ISTASYON": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 29.043858997742795, 41.0368509838395 ] ] } },
+{ "type": "Feature", "properties": { "SDURAKKODU": 214671, "SDURAKADI": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ", "ILCEADI": "Üsküdar", "SYON": "KADIKÖY", "AKILLI": "VAR", "FIZIKI": "KAPALI", "DURAK_TIPI": "WALLMODERN", "ENGELLIKULLANIM": "Uygun Degil", "ISTASYON": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 29.0431109999904, 41.036465000559588 ] ] } },
+{ "type": "Feature", "properties": { "SDURAKKODU": 900071, "SDURAKADI": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ", "ILCEADI": "Üsküdar", "SYON": "KADIKÖY", "AKILLI": "YOK", "FIZIKI": "KAPALI", "DURAK_TIPI": "ISTASYON", "ENGELLIKULLANIM": "Uygun Degil", "ISTASYON": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 29.043884405686295, 41.036432069091099 ] ] } },
+{ "type": "Feature", "properties": { "SDURAKKODU": 214672, "SDURAKADI": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ", "ILCEADI": "Üsküdar", "SYON": "MECIDIYEKÖY", "AKILLI": "YOK", "FIZIKI": "KAPALI", "DURAK_TIPI": "WALLMODERN", "ENGELLIKULLANIM": "Uygun", "ISTASYON": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 29.043471999990395, 41.036798000559685 ] ] } },
+{ "type": "Feature", "properties": { "SDURAKKODU": 900072, "SDURAKADI": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ", "ILCEADI": "Üsküdar", "SYON": "MECIDIYEKÖY", "AKILLI": "YOK", "FIZIKI": "AÇIK", "DURAK_TIPI": "ISTASYON", "ENGELLIKULLANIM": "Uygun", "ISTASYON": "15 TEMMUZ ŞEHİTLER KÖPRÜSÜ" }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 29.042573645699896, 41.037002574281594 ] ] } }
+]
+}

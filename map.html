@@ -297,14 +297,18 @@
             istasyonlar.features.forEach(feature => {
                 const coords = feature.geometry.coordinates;
                 const popupContent = `
-        <strong>İstasyon Adı:</strong> ${feature.properties.ISTASYON}<br>
+        <strong>Station Name:</strong> ${feature.properties.ISTASYON}<br>
     `;
-                L.circleMarker([coords[1], coords[0]], {
+                const marker = L.circleMarker([coords[1], coords[0]], {
                     radius: 5, // Nokta boyutu
                     color: '#3388ff', // Nokta rengi
                     fillColor: '#3388ff', // Dolgu rengi
                     fillOpacity: 1 // Dolgu opaklığı
                 }).bindPopup(popupContent).addTo(map);
+
+                marker.on('click', function () {
+                    marker.openPopup();
+                });
             });
 
             if (startFeature && endFeature) {
@@ -437,12 +441,65 @@
                     onEachFeature: function (feature, layer) {
                         if (feature.properties && feature.properties.ISKELE_AD) {
                             layer.bindPopup(feature.properties.ISKELE_AD);
+                            layer.on('click', function () {
+                                layer.openPopup();
+                            });
                         }
                     }
                 }).addTo(map);
             })
             .catch(error => {
                 console.error('İskeleler GeoJSON yüklenemedi:', error);
+            });
+
+        fetch('metrobus4326.geojson')
+            .then(response => response.json())
+            .then(data => {
+                const metrobusIcon = L.icon({
+                    iconUrl: 'Assets/metrobus.png', // İskele sembolü ikon dosyasının yolu
+                    iconSize: [16, 16], // İkon boyutu
+                    iconAnchor: [16, 32], // İkonun haritadaki konumunu belirleyen nokta
+                    popupAnchor: [0, -32] // Popup'ın ikonun üstünde görünmesini sağlar
+                });
+
+                L.geoJSON(data, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng, { icon: metrobusIcon });
+                    },
+                    onEachFeature: function (feature, layer) {
+                        if (feature.properties && feature.properties.ISTASYON) {
+                            layer.bindPopup(feature.properties.ISTASYON);
+                        }
+                    }
+                }).addTo(map);
+            })
+            .catch(error => {
+                console.error('Metrobus GeoJSON yüklenemedi:', error);
+            });
+
+        fetch('otobus4326.geojson')
+            .then(response => response.json())
+            .then(data => {
+                const metrobusIcon = L.icon({
+                    iconUrl: 'Assets/bus.png', // İskele sembolü ikon dosyasının yolu
+                    iconSize: [16, 16], // İkon boyutu
+                    iconAnchor: [16, 32], // İkonun haritadaki konumunu belirleyen nokta
+                    popupAnchor: [0, -32] // Popup'ın ikonun üstünde görünmesini sağlar
+                });
+
+                L.geoJSON(data, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng, { icon: metrobusIcon });
+                    },
+                    onEachFeature: function (feature, layer) {
+                        if (feature.properties && feature.properties.ISTASYON) {
+                            layer.bindPopup(feature.properties.ISTASYON);
+                        }
+                    }
+                }).addTo(map);
+            })
+            .catch(error => {
+                console.error('Otobus GeoJSON yüklenemedi:', error);
             });
     </script>
 </body>
