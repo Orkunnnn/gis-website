@@ -332,11 +332,11 @@
 
                 // Başlangıç ve bitiş istasyonlarını haritaya ekleyin
                 L.marker([startCoords[1], startCoords[0]], { icon: startIcon }).bindPopup(`
-    <strong>İstasyon Adı:</strong> ${startFeature.properties.ISTASYON}<br>
+    <strong>Station Name:</strong> ${startFeature.properties.ISTASYON}<br>
 `).addTo(map);
 
                 L.marker([endCoords[1], endCoords[0]], { icon: endIcon }).bindPopup(`
-    <strong>İstasyon Adı:</strong> ${endFeature.properties.ISTASYON}<br>
+    <strong>Station Name:</strong> ${endFeature.properties.ISTASYON}<br>
 `).addTo(map);
 
                 // Tüm rotayı haritaya ekleyin
