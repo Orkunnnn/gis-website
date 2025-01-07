@@ -340,8 +340,8 @@
 `).addTo(map);
 
                 // Tüm rotayı haritaya ekleyin
-                L.geoJSON(rota).addTo(map);
-
+                const geojsonLayer = L.geoJSON(rota).addTo(map);
+                map.fitBounds(geojsonLayer.getBounds());
                 // Metro simgesi için özel ikon oluştur
                 const metroIcon = L.icon({
                     iconUrl: 'https://maps.google.com/mapfiles/kml/shapes/rail.png',
@@ -477,30 +477,6 @@
                 console.error('Metrobus GeoJSON yüklenemedi:', error);
             });
 
-        fetch('otobus4326.geojson')
-            .then(response => response.json())
-            .then(data => {
-                const metrobusIcon = L.icon({
-                    iconUrl: 'Assets/bus.png', // İskele sembolü ikon dosyasının yolu
-                    iconSize: [16, 16], // İkon boyutu
-                    iconAnchor: [16, 32], // İkonun haritadaki konumunu belirleyen nokta
-                    popupAnchor: [0, -32] // Popup'ın ikonun üstünde görünmesini sağlar
-                });
-
-                L.geoJSON(data, {
-                    pointToLayer: function (feature, latlng) {
-                        return L.marker(latlng, { icon: metrobusIcon });
-                    },
-                    onEachFeature: function (feature, layer) {
-                        if (feature.properties && feature.properties.ISTASYON) {
-                            layer.bindPopup(feature.properties.ISTASYON);
-                        }
-                    }
-                }).addTo(map);
-            })
-            .catch(error => {
-                console.error('Otobus GeoJSON yüklenemedi:', error);
-            });
     </script>
 </body>
 
