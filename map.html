@@ -129,7 +129,6 @@
         }
 
         .legend-collapse-btn {
-            display: none;
             position: absolute;
             right: -30px;
             top: 50%;
@@ -141,6 +140,7 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             font-size: 20px;
+            color: #003366;
         }
 
         @media (max-width: 768px) {
@@ -341,24 +341,39 @@
 
             return div;
         };
+        legend.addTo(map);
 
-        // Add click handler
+
         document.addEventListener('DOMContentLoaded', function () {
             const legendEl = document.querySelector('.legend');
             const collapseBtn = document.querySelector('.legend-collapse-btn');
-
-            collapseBtn.addEventListener('click', handleCollapse, { passive: false });
+            let lastTap = 0; // Prevent double tap
 
             function handleCollapse(e) {
                 e.preventDefault();
                 e.stopPropagation();
+
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+
+                if (tapLength < 500 && tapLength > 0) {
+                    return;
+                }
+
+                lastTap = currentTime;
+
                 legendEl.classList.toggle('collapsed');
                 collapseBtn.innerHTML = legendEl.classList.contains('collapsed') ? '❯' : '❮';
             }
+
+            // Prevent touch event from triggering click
+            collapseBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, { passive: false });
+
+            collapseBtn.addEventListener('click', handleCollapse);
         });
-        legend.addTo(map);
-
-
         fetch('metrolar4326.geojson')
             .then(response => response.json())
             .then(data => {
